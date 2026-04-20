@@ -70,3 +70,15 @@ _Keterangan: Tampilan dari login app yang meminta pengguna untuk memasukkan aute
 ![Map Node: login-app](<./pict-task-documentation/WhatsApp Image 2026-04-20 at 16.13.01.jpeg>)
 
 _Keterangan: Tampilan dari halaman dashboard_
+
+![Map Node: login-app](<./pict-task-documentation/WhatsApp Image 2026-04-20 at 16.15.39.jpeg>)
+
+_Keterangan: Tampilan ketika mengupload gambar_
+
+![Map Node: login-app](<./pict-task-documentation/WhatsApp Image 2026-04-20 at 16.16.22.jpeg>)
+
+_Keterangan: Tampilan dari halamaan ketika berhasil mengupload_
+
+![Map Node: login-app](<./pict-task-documentation/WhatsApp Image 2026-04-20 at 16.22.02.jpeg>)
+
+_Keterangan: gambar yang berhasil diupload akan tersimpan ke dalam database_
