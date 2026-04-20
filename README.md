@@ -9,10 +9,9 @@ Get the detailed information about the installation from the below-mentioned web
 ### Set up the Docker and Kubernetes repositories:
 
 ### Requirements
+
 1. Ubuntu machines as Master and Worker ( build on VM using Bridge Adapter) minimal 2 machines: 1 Master and 1 Worker
 2. Networking uses local network (FILKOM)
-
-
 
 > Download the GPG key for docker
 
@@ -91,7 +90,7 @@ echo "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.
 sudo apt-get update
 ```
 
-> Install  Kubernetes packages.
+> Install Kubernetes packages.
 
 ```bash
 # Use the same versions to avoid issues with the installation.
@@ -125,7 +124,9 @@ EOF
 # Apply sysctl params without reboot
 sudo sysctl --system
 ```
+
 ### Disable SWAP
+
 > Disable swap on controlplane and dataplane nodes
 
 ```bash
@@ -189,7 +190,7 @@ kubectl get nodes
 
 > Joining the node to the cluster:
 
-> Don't forget to include *--cri-socket unix:///var/run/cri-dockerd.sock* with the join command
+> Don't forget to include _--cri-socket unix:///var/run/cri-dockerd.sock_ with the join command
 
 ```bash
 sudo kubeadm join $controller_private_ip:6443 --token $token --discovery-token-ca-cert-hash $hash
@@ -218,68 +219,50 @@ rm -rf kubernetes_installation_docker/
 
 ### Installing Dashboard (Master node)
 
-1. *Installing Helm:*
-Download and install Helm with the following commands:
+1. _Installing Helm:_
+   Download dan install Helm dengan perintah berikut:
+
 ```bash
      curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
      chmod +x get_helm.sh
      ./get_helm.sh
-     helm   
+     helm
 ```
-3. *Adding the Kubernetes Dashboard Helm Repository:*
-Add the repository and verify it:
-```bash   
-     helm repo add kubernetes-dashboard https://kubernetes.github.io/dashboard/
-     helm repo list    
-```
-5. *Installing Kubernetes Dashboard Using Helm:*
-Install it in the `kubernetes-dashboard` namespace:
-```bash     
-     helm upgrade --install kubernetes-dashboard kubernetes-dashboard/kubernetes-dashboard --create-namespace --namespace kubernetes-dashboard
-     kubectl get pods,svc -n kubernetes-dashboard  
-```
-7. *Accessing the Dashboard:*
-Expose the dashboard using a NodePort:
-```bash      
-     kubectl expose deployment kubernetes-dashboard-kong --name k8s-dash-svc --type NodePort --port 443 --target-port 8443 -n kubernetes-dashboard
-```
-run: kubectl get pods,svc -n kubernetes-dashboard
-use this port to access the dashboard from phy node IP: 
-....
-service/k8s-dash-svc                           NodePort    10.110.85.135   <none>        443:30346/TCP   23s
 
-
-9. *Generating a Token for Login:*
-Create a service account and generate a token:
-```bash
-   nano k8s-dash.yaml
-```
+2. _Installing Headlamp Using YAML (Master node)_
+   Apply manifest Headlamp from the repository:
 
 ```bash
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  name: widhi
-  namespace: kube-system
----
-apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRoleBinding
-metadata:
-  name: widhi-admin
-roleRef:
-  apiGroup: rbac.authorization.k8s.io
-  kind: ClusterRole
-  name: cluster-admin
-subjects:
-- kind: ServiceAccount
-  name: widhi
-  namespace: kube-system
+     kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/headlamp/main/kubernetes-headlamp.yaml
+     kubectl get pods,svc -n kube-system
 ```
-then run:
+
+3. _Exposing Headlamp via NodePort:_
+   Expose service Headlamp for access it out of cluster:
+
 ```bash
-kubectl apply -f k8s-dash.yaml
+     kubectl expose deployment headlamp --name headlamp-svc --type NodePort --port 80 --target-port 4466 -n kube-system
+     kubectl get svc -n kube-system
 ```
-10. Generate the token:    
-     kubectl create token widhi -n kube-system
 
+Note port NodePort generated, example:
+service/headlamp-svc NodePort 10.x.x.x <none> 80:3XXXX/TCP ...
+Access dashboard : `http://<IP-node>:<NodePort>`
 
+4. _Creating a Service Account and Generating Token for Login:_
+   Create ServiceAccount with cluster-admin access:
+
+```bash
+     kubectl create serviceaccount headlamp-admin -n kube-system
+     kubectl create clusterrolebinding headlamp-admin \
+     --serviceaccount=kube-system:headlamp-admin \
+     --clusterrole=cluster-admin
+```
+
+Generate token login:
+
+```bash
+kubectl create token headlamp-admin -n kube-system
+```
+
+Use token to login at Headlamp dashboard.
