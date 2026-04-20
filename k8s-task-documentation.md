@@ -8,7 +8,7 @@
 
 | No  | Nama Lengkap           | NIM             |
 | --- | ---------------------- | --------------- |
-| 1   | Ihya' Ulumuddin        | 245150200111047 |
+| 1   | Ihya' Ulumuddin        | 245150201111024 |
 | 1   | Muhammad Fatih Alhakim | 245150200111047 |
 
 - **Kelas :** A
@@ -60,3 +60,13 @@ _Keterangan: 3 pod replica dari login-app merupakan tujuan dari project ini deng
 ![](./pict-task-documentation/Screenshot%202026-04-20%20143807.png)
 
 ---
+
+**Halaman login-app**
+
+![Map Node: login-app](<./pict-task-documentation/WhatsApp Image 2026-04-20 at 16.12.38.jpeg>)
+
+_Keterangan: Tampilan dari login app yang meminta pengguna untuk memasukkan autentikasi agar bisa mengakses halaman dashboard_
+
+![Map Node: login-app](<./pict-task-documentation/WhatsApp Image 2026-04-20 at 16.13.01.jpeg>)
+
+_Keterangan: Tampilan dari halaman dashboard_

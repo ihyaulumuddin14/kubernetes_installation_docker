@@ -229,12 +229,12 @@ rm -rf kubernetes_installation_docker/
      helm
 ```
 
-2. _Installing Headlamp Using YAML (Master node)_
-   Apply manifest Headlamp from the repository:
+2. _Installing Headlamp Using Helm (Master node)_
+   add custom repo to local helm repositories:
 
 ```bash
-     kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/headlamp/main/kubernetes-headlamp.yaml
-     kubectl get pods,svc -n kube-system
+   helm repo add headlamp https://kubernetes-sigs.github.io/headlamp/
+   helm install my-headlamp headlamp/headlamp --namespace kube-system
 ```
 
 3. _Exposing Headlamp via NodePort:_
