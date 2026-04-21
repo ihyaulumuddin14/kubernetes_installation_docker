@@ -1,4 +1,4 @@
-# 📁 [Kubernetes : Cluster Management]
+# 📁 Kubernetes : Cluster Management
 
 > _Manajemen cluster Kubernetes_
 
@@ -9,7 +9,7 @@
 | No  | Nama Lengkap           | NIM             |
 | --- | ---------------------- | --------------- |
 | 1   | Ihya' Ulumuddin        | 245150201111024 |
-| 1   | Muhammad Fatih Alhakim | 245150200111047 |
+| 2   | Muhammad Fatih Alhakim | 245150200111047 |
 
 - **Kelas :** A
 - **Mata Kuliah :** Penyediaan Automasi Layanan
@@ -19,16 +19,16 @@
 
 ## 📌 Deskripsi Project
 
-Project ini bertujuan untuk melakukan manajemen klaster menggunakan Kubernetes (K8S) dengan cara menginstalasi environment K8S berbasis Docker, kemudian melakukan deployment aplikasi sebanyak 3 replicas. Melalui project ini, kami mempelajari bagaimana Kubernetes mengotomasi pembuatan dan pengelolaan pod, sehingga aplikasi dapat berjalan secara andal dan mudah di-scale.
+Project ini bertujuan untuk melakukan manajemen klaster menggunakan Kubernetes (K8s) dengan cara menginstalasi environment K8s berbasis Docker, kemudian melakukan deployment aplikasi sebanyak 3 replicas. Melalui project ini, kami mempelajari bagaimana Kubernetes mengotomasi pembuatan dan pengelolaan pod, sehingga aplikasi dapat berjalan secara andal dan mudah di-scale.
 
 ---
 
 ## 🎯 Tujuan Project
 
-1. memahami cara menyiapkan environment K8S menggunakan Docker, mulai dari clone repo, konfigurasi, hingga cluster bisa berjalan.
-2. memahami konsep dasar K8S yaitu:
+1. Memahami cara menyiapkan environment K8s menggunakan Docker, mulai dari clone repo, konfigurasi, hingga cluster bisa berjalan.
+2. Memahami konsep dasar K8s yaitu:
    - Deployment → cara mendeploy aplikasi di atas klaster
-   - Replicas → K8S bisa menjalankan beberapa instance aplikasi sekaligus, sehingga kalau satu pod mati, yang lain tetap jalan (high availability)
+   - Replicas → K8s bisa menjalankan beberapa instance aplikasi sekaligus, sehingga kalau satu pod mati, yang lain tetap jalan (high availability)
 
 ---
 
@@ -80,7 +80,7 @@ Pada projek ini, kami menambahkan konfigurasi nginx sebagai reverse proxy agar d
 
 _Keterangan: Tampilan dashboard headlamp ketika mengakses route /headlamp_
 
-_Setelah berhasil menginstall kubernetes dan mendeploy aplikasi, selanjutnya instalasi dashboard kubernetes untuk memudahkan memonitoring resource, sayanganya dashboard dari kubernetes sudah deprecated, oleh karena itu kami menggunakan Headlamp dashbooard sebagai alternatifnya._
+_Setelah berhasil menginstall kubernetes dan mendeploy aplikasi, selanjutnya instalasi Kubernetes dashboard untuk memudahkan memonitoring resource. Berdasarkan dokumentasi resmi dari Kubernetes, kubernetes dashboard telah deprecated, oleh karena itu kami menggunakan Headlamp dashbooard sebagai alternatifnya._
 
 ---
 
@@ -94,7 +94,7 @@ _Skema pada gambar merupakan visualisasi dari cluster kubernetes yang terdiri da
 
 _Node ulum-k8s-master merupakan `Control Plane`, yaitu node yang mengelola sistem cluster seperti membuat keputusan penjadwalan serta mendeteksi dan menanggapi peristiwa yang terjadi di dalam cluster._
 
-_Sedangkan nde ulum-k8s-worker adalah `Data Plane` yang merupakan node untuk mengelola resource dan aplikasi (pod). Fungsi dari node ini berupa eksekusi dan penyediaan resource, seperti menjalankan kontainer (Container Runtime), melankasanakan perintah dari node master (Kubelet), dan pengelola jaringan (Kube-proxy) agar pod bisa berkomunikasi atau bisa diakses di luar cluster._
+_Sedangkan node ulum-k8s-worker adalah `Data Plane` yang merupakan node untuk mengelola resource dan aplikasi (pod). Fungsi dari node ini berupa eksekusi dan penyediaan resource, seperti menjalankan kontainer (Container Runtime), melaksanakan perintah dari node master (Kubelet), dan pengelola jaringan (Kube-proxy) agar pod bisa berkomunikasi atau bisa diakses di luar cluster._
 
 ---
 
@@ -104,13 +104,13 @@ _Sedangkan nde ulum-k8s-worker adalah `Data Plane` yang merupakan node untuk men
 
 _Keterangan: Gambar diatas merupakan Dependency map dari aplikasi login-app_
 
-_Pada gambar tersebut terdaapt 3 pod replica dari login-app yang berjalan secara paralel yang mana merupakan tujuan dari project ini dengan mengubah jumlah replica pada web-deployment berikut:_
+_Pada gambar tersebut terdapat 3 pod replica dari login-app yang berjalan secara paralel yang mana merupakan tujuan dari project ini dengan mengubah jumlah replica pada web-deployment berikut:_
 
 ![](./pict-task-documentation/Screenshot%202026-04-20%20143807.png)
 
-_Ke tiga pod tersebut adalah pengaplikasian dari high availability, yang mana jika terdapat satu pod yang mati/error, dua pod lainnya masih dapat melayani user selama pod baru yang sehat di buat kembali oleh ReplicaSet._
+_Ketiga pod tersebut adalah penerapan dari prinsip high availability, yang mana jika terdapat satu pod yang mati/error, dua pod lainnya masih dapat melayani user selama pod baru yang sehat di buat kembali oleh ReplicaSet._
 
-_Karena kemungkinan besar terjadinya perubahan IP pada pod yang disebabkan error atau mati, maka terdapat Service login-app sebagai load balancer internal yang terhubung ke ketiga pod memiliki fungsi untuk memberikan satu IP/DNS yang statis._
+_Karena kemungkinan besar terjadinya perubahan IP pada pod yang disebabkan error atau mati, maka terdapat Service login-app sebagai load balancer internal yang terhubung ke ketiga pod memiliki fungsi untuk memberikan satu IP yang statis sehingga lebih stabil daripada menggunakan IP pod karena akan menghasilkan IP baru ketika terdapat pod baru._
 
 ---
 
@@ -130,7 +130,7 @@ _Keterangan: Tampilan ketika mengupload gambar._
 
 ![Map Node: login-app](<./pict-task-documentation/WhatsApp Image 2026-04-20 at 16.16.22.jpeg>)
 
-_Keterangan: Tampilan dari halamaan ketika berhasil mengupload ke database._
+_Keterangan: Tampilan dari halaman ketika berhasil mengupload ke database._
 
 ![Map Node: login-app](<./pict-task-documentation/WhatsApp Image 2026-04-20 at 16.22.02.jpeg>)
 
