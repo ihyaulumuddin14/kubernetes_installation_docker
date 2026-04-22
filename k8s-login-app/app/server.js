@@ -5,6 +5,18 @@ const path = require('path');
 const fs = require('fs');
 const multer = require('multer');
 const session = require('express-session');
+const promBundle = require("express-prom-bundle");
+
+const metricsMiddleware = promBundle({
+  includeMethod: true,
+  includePath: true,
+  promClient: {
+    collectDefaultMetrics: {
+      // Collect every 5 seconds
+      timeout: 5000
+    }
+  }
+});
 
 // Create uploads directory if it doesn't exist
 const uploadDir = path.join(__dirname, 'public/uploads');
@@ -85,6 +97,8 @@ db.connect(err => {
     VALUES ('admin', 'admin123', 'admin@example.com')
   `);
 });
+
+app.use(metricsMiddleware);
 
 // Session middleware
 app.use(session({
