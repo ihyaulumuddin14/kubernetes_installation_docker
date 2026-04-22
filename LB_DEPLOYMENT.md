@@ -4,7 +4,7 @@ This guide demonstrates how to set up load balancing for the login web applicati
 
 ## Introduction
 
-Your current deployment already has multiple replicas (`replicas: 2`) defined in the web deployment, which means Kubernetes is running two pods. The default Kubernetes service provides basic load balancing between these pods.
+Your current deployment already has multiple replicas (`replicas: 3`) defined in the web deployment, which means Kubernetes is running two pods. The default Kubernetes service provides basic load balancing between these pods.
 
 In this guide, we'll enhance this with:
 1. A dedicated load balancer configuration
@@ -21,85 +21,7 @@ kind: Deployment
 metadata:
   name: login-app
 spec:
-  replicas: 2
-  selector:
-    matchLabels:
-      app: login-app
-  template:
-    metadata:
-      labels:
-        app: login-app
-    spec:
-      containers:
-      - name: login-app
-        image: login-app:latest
-        imagePullPolicy: Never
-        ports:
-        - containerPort: 3000
-        env:
-        - name: DB_HOST
-          value: mysql
-        - name: DB_USER
-          valueFrom:
-            secretKeyRef:
-              name: mysql-secret
-              key: MYSQL_USER
-        - name: DB_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: mysql-secret
-              key: MYSQL_PASSWORD
-        - name: DB_NAME
-          valueFrom:
-            secretKeyRef:
-              name: mysql-secret
-              key: MYSQL_DATABASE
-        - name: POD_NAME
-          valueFrom:
-            fieldRef:
-              fieldPath: metadata.name
-        - name: NODE_NAME
-          valueFrom:
-            fieldRef:
-              fieldPath: spec.nodeName
-        livenessProbe:
-          httpGet:
-            path: /health
-            port: 3000
-          initialDelaySeconds: 30
-          periodSeconds: 10
-        readinessProbe:
-          httpGet:
-            path: /health
-            port: 3000
-          initialDelaySeconds: 5
-          periodSeconds: 5
-EOF
-```
-# Load Balancing for Login Web Application
-
-This guide demonstrates how to set up load balancing for the login web application to distribute traffic across multiple frontend containers.
-
-## Introduction
-
-Your current deployment already has multiple replicas (`replicas: 2`) defined in the web deployment, which means Kubernetes is running two pods. The default Kubernetes service provides basic load balancing between these pods.
-
-In this guide, we'll enhance this with:
-1. A dedicated load balancer configuration
-2. Testing to verify the load balancing is working
-
-## 1. Modify Web Deployment for Better Load Balancing
-
-First, let's update the web deployment to ensure we have proper identification for each pod:
-
-```bash
-cat > k8s/web-deployment-lb.yaml << 'EOF'
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: login-app
-spec:
-  replicas: 2
+  replicas: 3
   selector:
     matchLabels:
       app: login-app
