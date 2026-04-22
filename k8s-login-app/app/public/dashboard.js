@@ -18,6 +18,23 @@ document.addEventListener('DOMContentLoaded', function() {
             console.error('Auth error:', error);
             window.location.href = 'index.html';
         });
+
+    // Visualize load balancing
+    fetch('/server-info')
+      .then(response => response.json())
+      .then(data => {
+        const serverInfoDiv = document.createElement('div');
+        serverInfoDiv.style.position = 'fixed';
+        serverInfoDiv.style.bottom = '10px';
+        serverInfoDiv.style.right = '10px';
+        serverInfoDiv.style.padding = '5px';
+        serverInfoDiv.style.background = 'rgba(0,0,0,0.6)';
+        serverInfoDiv.style.color = 'white';
+        serverInfoDiv.style.fontSize = '12px';
+        serverInfoDiv.style.borderRadius = '3px';
+        serverInfoDiv.textContent = `Server: ${data.podName}`;
+        document.body.appendChild(serverInfoDiv);
+      });
     
     // Handle logout
     document.getElementById('logout-btn').addEventListener('click', function() {
