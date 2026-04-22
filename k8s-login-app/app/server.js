@@ -6,6 +6,7 @@ const fs = require('fs');
 const multer = require('multer');
 const session = require('express-session');
 const promBundle = require("express-prom-bundle");
+const os = require('os');
 
 const metricsMiddleware = promBundle({
   includeMethod: true,
@@ -262,4 +263,21 @@ app.get('/health', (req, res) => {
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
+});
+
+const serverInfo = {
+  hostname: os.hostname(),
+  podName: process.env.POD_NAME || 'unknown',
+  nodeName: process.env.NODE_NAME || 'unknown'
+};
+
+// Add this after the health route
+app.get('/server-info', (req, res) => {
+  res.json(serverInfo);
+});
+
+// Insert this line before app.listen
+app.use((req, res, next) => {
+  res.setHeader('X-Served-By', serverInfo.podName);
+  next();
 });
